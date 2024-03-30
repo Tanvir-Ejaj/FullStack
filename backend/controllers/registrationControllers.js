@@ -45,6 +45,7 @@ let registrationControllers = async (req, res) => {
         name: name,
         email: email,
         password: hash,
+        otp: otp,
       });
 
       user.save();

@@ -11,6 +11,10 @@ const userSchema = new Schema({
     default: "User",
   },
   otp: String,
+  emailVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
