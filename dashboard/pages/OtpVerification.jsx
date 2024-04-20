@@ -19,7 +19,6 @@ const OtpVerification = () => {
       }
     );
     setLoading(false);
-    console.log(data);
   };
 
   const onFinishFailed = (errorInfo) => {
