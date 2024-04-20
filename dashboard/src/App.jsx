@@ -11,7 +11,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Registration />} />
-      <Route path="/otpverification" element={<OtpVerification />} />
+      <Route path="/otpverification/:email" element={<OtpVerification />} />
     </Route>
   )
 );

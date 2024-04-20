@@ -1,9 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, Form, Input, Alert } from "antd";
+import { useParams } from "react-router-dom";
 
 const OtpVerification = () => {
+  let [loading, setLoading] = useState(false);
+  let [alert, setAlert] = useState("");
+  let params = useParams();
+
+  const onFinish = async (values) => {
+    setLoading(true);
+    setAlert("Verification Successfull!");
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/auth/otpverification/:email",
+      {
+        email: params.email,
+        otp: values.otp,
+      }
+    );
+    setLoading(false);
+    console.log(data);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
     <>
-      <div className=""></div>
+      {alert && <Alert message={alert} type="success" showIcon closable />}
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          maxWidth: 600,
+        }}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Code"
+          name="otp"
+          rules={[
+            {
+              required: true,
+              message: "Please input your otp!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            disabled={loading}
+          >
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Alert, Space } from "antd";
+import { Button, Form, Input, Alert } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -25,11 +25,11 @@ const Registration = () => {
         },
       }
     );
-    console.log(data);
     setLoading(false);
     setTimeout(() => {
-      navigate("/otpverification");
+      navigate(`/otpverification/${values.email}`);
     }, 1000);
+    console.log(data);
   };
 
   const onFinishFailed = (errorInfo) => {
