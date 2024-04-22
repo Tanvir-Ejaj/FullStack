@@ -8,6 +8,8 @@ import Registration from "../pages/Registration";
 import OtpVerification from "../pages/OtpVerification";
 import Login from "../pages/Login";
 import EmailVerifyLink from "../pages/EmailVerifyLink";
+import ForgetPassword from "../pages/ForgetPassword";
+import NewPassword from "../pages/NewPassword";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +18,8 @@ const router = createBrowserRouter(
       <Route path="/otpverification/:email" element={<OtpVerification />} />
       <Route path="/emailverification/:token" element={<EmailVerifyLink />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgetpassword" element={<ForgetPassword />} />
+      <Route path="/newpassword/:token" element={<NewPassword />} />
     </Route>
   )
 );

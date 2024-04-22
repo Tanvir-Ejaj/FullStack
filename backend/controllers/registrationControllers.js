@@ -31,18 +31,18 @@ let registrationControllers = async (req, res) => {
     });
 
     // create a otp
-    // let otp = otpGenerator.generate(6, {
-    //   upperCaseAlphabets: false,
-    //   specialChars: false,
-    // });
+    let otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+    });
 
     // add the main information
-    // const info = await transporter.sendMail({
-    //   from: `"E commerce 👻" <tanvirejij@gmail.com>`, // sender address
-    //   to: email, // list of receivers
-    //   subject: "Verification Code", // Subject line
-    //   html: `<b>This is your verification code :</b>${otp}`, // html body
-    // });
+    const info = await transporter.sendMail({
+      from: `"E commerce 👻" <tanvirejij@gmail.com>`, // sender address
+      to: email, // list of receivers
+      subject: "Verification Code", // Subject line
+      html: `<b>This is your verification code :</b>${otp}`, // html body
+    });
 
     // hash the password
     bcrypt.hash(password, 10, async function (err, hash) {
@@ -51,21 +51,21 @@ let registrationControllers = async (req, res) => {
         name: name,
         email: email,
         password: hash,
-        // otp: otp,
+        otp: otp,
       });
       user.save();
 
-      jwt.sign({ email: email }, "shhhhh", async function (err, token) {
-        const info = transporter.sendMail({
-          from: `"E commerce 👻"`, // sender address
-          to: email, // list of receivers
-          subject: "Verification Code", // Subject line
-          html: `<a href="http://localhost:5173/emailverification/${token}">Click Here to verify</a>`, // html body
-        });
-      });
+      // email verify code
+      // jwt.sign({ email: email }, "shhhhh", async function (err, token) {
+      //   const info = transporter.sendMail({
+      //     from: `"E commerce 👻"`, // sender address
+      //     to: email, // list of receivers
+      //     subject: "Verification Code", // Subject line
+      //     html: `<a href="http://localhost:5173/emailverification/${token}">Click Here to verify</a>`, // html body
+      //   });
+      // });
 
-      // time for otp
-
+      // time for link
       // setTimeout(async () => {
       //   await User.findOneAndUpdate({ email: email });
       //   console.log("asdasd");

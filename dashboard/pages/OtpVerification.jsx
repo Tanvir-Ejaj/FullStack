@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Form, Input, Alert } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const OtpVerification = () => {
   let [loading, setLoading] = useState(false);
   let [alert, setAlert] = useState("");
   let params = useParams();
+  let navigate = useNavigate();
 
   const onFinish = async (values) => {
     setLoading(true);
     setAlert("Verification Successfull!");
     let data = await axios.post(
-      "http://localhost:8000/api/v1/auth/otpverification/:email",
+      "http://localhost:8000/api/v1/auth/otpverification",
       {
         email: params.email,
         otp: values.otp,
       }
     );
     setLoading(false);
+    setTimeout(() => {
+      navigate(`/login/${params.email}`);
+    }, 15000);
   };
 
   const onFinishFailed = (errorInfo) => {

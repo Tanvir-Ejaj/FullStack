@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Alert } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   let [loading, setLoading] = useState(false);
@@ -9,9 +9,7 @@ const Registration = () => {
   let navigate = useNavigate();
 
   const onFinish = async (values) => {
-    console.log("Success",);
     setLoading(true);
-    setAlert("Registration Successfull! Please Check Your Email");
     let data = await axios.post(
       "http://localhost:8000/api/v1/auth/registration",
       {
@@ -26,9 +24,10 @@ const Registration = () => {
       }
     );
     setLoading(false);
-    // setTimeout(() => {
-    //   navigate(`/otpverification/${values.email}`);
-    // }, 1000);
+    setAlert("Registration Successfull! Please Check Your Email");
+    setTimeout(() => {
+      navigate(`/otpverification/${values.email}`);
+    }, 1000);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -105,6 +104,7 @@ const Registration = () => {
           >
             Submit
           </Button>
+          <Link to="/forgetpassword">Forget Password</Link>
         </Form.Item>
       </Form>
     </>

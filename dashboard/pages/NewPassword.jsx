@@ -1,29 +1,32 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Alert } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Login = () => {
+const NewPassword = () => {
+  let navigate = useNavigate();
+  let params = useParams();
   let [loading, setLoading] = useState(false);
-  let [alert, setAlert] = useState("");
 
   const onFinish = async (values) => {
     setLoading(true);
-    let data = await axios.post("http://localhost:8000/api/v1/auth/login", {
-      email: values.email,
-      password: values.password,
-    });
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/auth/newpassword",
+      {
+        password: values.password,
+        token: params.token,
+      }
+    );
+    console.log("Success:", data);
     setLoading(false);
-    setAlert("Login Successfull!");
-    console.log(data.data);
+    navigate("/login");
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
     <>
-      {alert && <Alert message={alert} type="success" showIcon closable />}
       <Form
         name="basic"
         labelCol={{
@@ -43,28 +46,16 @@ const Login = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           label="Password"
           name="password"
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Input A New Password",
             },
           ]}
         >
-          <Input.Password />
+          <Input />
         </Form.Item>
         <Form.Item
           wrapperCol={{
@@ -86,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default NewPassword;
