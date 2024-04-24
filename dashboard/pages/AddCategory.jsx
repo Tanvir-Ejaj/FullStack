@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Alert } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const AddCategory = () => {
   let [loading, setLoading] = useState(false);
-  let [alert, setAlert] = useState("");
-  let navigate = useNavigate();
-
+  const [form] = Form.useForm();
   const onFinish = async (values) => {
-    setLoading(true);
-    let data = await axios.post("http://localhost:8000/api/v1/auth/login", {
-      email: values.email,
-      password: values.password,
-    });
-    setLoading(false);
-    setAlert("Login Successfull!");
-    navigate("/dashboard")
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/products/createcategory",
+      {
+        name: values.name,
+      }
+    );
+    form.resetFields();
     console.log(data.data);
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
     <>
-      {alert && <Alert message={alert} type="success" showIcon closable />}
       <Form
         name="basic"
         labelCol={{
@@ -41,34 +34,24 @@ const Login = () => {
         initialValues={{
           remember: true,
         }}
+        form={form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
-          name="email"
+          label="Create Category"
+          name="name"
           rules={[
             {
               required: true,
-              message: "Please input your Email!",
+              message: "Please input Category Name!",
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -89,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AddCategory;

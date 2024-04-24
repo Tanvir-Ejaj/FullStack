@@ -29,7 +29,6 @@ const Registration = () => {
       navigate(`/otpverification/${values.email}`);
     }, 1000);
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -104,6 +103,7 @@ const Registration = () => {
           >
             Submit
           </Button>
+          <Link to="/login">Login</Link>
           <Link to="/forgetpassword">Forget Password</Link>
         </Form.Item>
       </Form>
