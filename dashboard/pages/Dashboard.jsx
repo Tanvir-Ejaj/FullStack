@@ -8,9 +8,12 @@ import {
 } from "@ant-design/icons";
 import { Menu, Col, Row } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   let navigate = useNavigate();
+
+  let userInfo = useSelector((state) => state.user.value);
 
   function getItem(label, key, icon, children, type) {
     return {
@@ -22,33 +25,45 @@ const Dashboard = () => {
     };
   }
   const items = [
-    getItem("User", "sub1", <UserOutlined />, [
-      getItem("Add User", "1", <UserAddOutlined />),
-      getItem("View User", "2", <UserSwitchOutlined />),
-    ]),
+    userInfo.role !== "User" &&
+      getItem("User", "sub1", <UserOutlined />, [
+        getItem("Add User", "1", <UserAddOutlined />),
+        getItem("View User", "2", <UserSwitchOutlined />),
+      ]),
     {
       type: "divider",
     },
-    getItem("Products", "sub2", <ProductOutlined />, [
-      getItem("Add Products", "3"),
-      getItem("View Product", "4"),
-    ]),
+    userInfo.role !== "User" &&
+      getItem("Products", "sub2", <ProductOutlined />, [
+        getItem("Add Products", "/dashboard/addproduct"),
+        getItem("View Product", "/dashboard/viewproduct"),
+      ]),
     {
       type: "divider",
     },
-    getItem("Category", "sub3", <SecurityScanOutlined />, [
-      getItem("Add Category", "/dashboard/addcategory"),
-      getItem("View Category", "/dashboard/viewcategory"),
-      getItem("Add Sub-Category", "/dashboard/addsubcategory"),
-      getItem("View Sub-Category", "/dashboard/viewsubcategory"),
-    ]),
+    userInfo.role !== "User" &&
+      getItem("Category", "sub3", <SecurityScanOutlined />, [
+        getItem("Add Category", "/dashboard/addcategory"),
+        getItem("View Category", "/dashboard/viewcategory"),
+        getItem("Add Sub-Category", "/dashboard/addsubcategory"),
+        getItem("View Sub-Category", "/dashboard/viewsubcategory"),
+      ]),
     {
       type: "divider",
     },
-    getItem("Discount", "sub4", <SecurityScanOutlined />, [
-      getItem("Add Discount", "9"),
-      getItem("View Discount", "10"),
-    ]),
+    userInfo.role !== "User" &&
+      getItem("Discount", "sub4", <SecurityScanOutlined />, [
+        getItem("Add Discount", "9"),
+        getItem("View Discount", "10"),
+      ]),
+    {
+      type: "divider",
+    },
+    userInfo.role == "User" &&
+      getItem("My Profile", "sub5", <SecurityScanOutlined />, [
+        getItem("Purchase Details", "11"),
+        getItem("Profile", "12"),
+      ]),
     {
       type: "divider",
     },
@@ -57,6 +72,7 @@ const Dashboard = () => {
   const onClick = (e) => {
     navigate(e.key);
   };
+
   return (
     <>
       <Row>

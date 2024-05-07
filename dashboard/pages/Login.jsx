@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Button, Form, Input, Alert } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { activeUSer } from "../src/slices/userSlice";
 
 const Login = () => {
   let [loading, setLoading] = useState(false);
   let [alert, setAlert] = useState("");
   let navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -14,10 +18,17 @@ const Login = () => {
       email: values.email,
       password: values.password,
     });
-    setLoading(false);
-    setAlert("Login Successfull!");
-    navigate("/dashboard")
-    console.log(data.data);
+    if (!data.data.error) {
+      setAlert("Login Successfull!");
+      setLoading(false);
+      dispatch(activeUSer(data.data));
+      localStorage.setItem("user", JSON.stringify(data.data));
+      navigate("/dashboard");
+    }else{
+      setAlert("Login Unseccessfull!");
+      setLoading(false);
+      console.log("data.data");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {

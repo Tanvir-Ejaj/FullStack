@@ -7,7 +7,7 @@ const AddCategory = () => {
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     let data = await axios.post(
-      "http://localhost:8000/api/v1/products/createcategory",
+      "http://localhost:8000/api/v1/category/createcategory",
       {
         name: values.name,
       }

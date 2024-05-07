@@ -12,9 +12,9 @@ let otpController = async (req, res) => {
       { email: email },
       { otp: "", emailVerified: true }
     );
-    res.send("Done");
+    res.send("OTP Verified");
   } else {
-    res.send("Not Done");
+    res.send("OTP Not Match");
   }
 };
 

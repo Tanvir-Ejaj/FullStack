@@ -8,7 +8,7 @@ const ViewSubCategory = () => {
   useEffect(() => {
     async function allcategory() {
       let data = await axios.get(
-        "http://localhost:8000/api/v1/products/viewsubcategory"
+        "http://localhost:8000/api/v1/category/viewsubcategory"
       );
 
       let allcategoryData = [];

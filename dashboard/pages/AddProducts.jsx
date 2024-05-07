@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Space } from "antd";
+import React, { useState } from "react";
+import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 
-const AddSubCategory = () => {
-  let [categoryList, setCategoryList] = useState([]);
+const AddProducts = () => {
   let [loading, setLoading] = useState(false);
-  let [categoryId, setCategoryId] = useState("");
-
   const [form] = Form.useForm();
+  let [image, setImage] = useState({});
 
   const onFinish = async (values) => {
     let data = await axios.post(
-      "http://localhost:8000/api/v1/category/createsubcategory",
+      "http://localhost:8000/api/v1/product/createproduct",
       {
         name: values.name,
-        categoryId: categoryId,
+        avatar: image,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     form.resetFields();
@@ -24,26 +27,8 @@ const AddSubCategory = () => {
     console.log("Failed:", errorInfo);
   };
 
-  useEffect(() => {
-    async function allcategory() {
-      let data = await axios.get(
-        "http://localhost:8000/api/v1/category/viewallcategory"
-      );
-      let allcategoryData = [];
-
-      data.data.map((item) => {
-        allcategoryData.push({
-          value: item._id,
-          label: item.name,
-        });
-      });
-      setCategoryList(allcategoryData);
-    }
-    allcategory();
-  }, []);
-
-  const handleChange = (value) => {
-    setCategoryId(value);
+  let handleUpload = (e) => {
+    setImage(e.target.files[0]);
   };
 
   return (
@@ -68,22 +53,15 @@ const AddSubCategory = () => {
         autoComplete="off"
       >
         <Form.Item>
-          <Select
-            defaultValue={categoryList}
-            style={{
-              width: 120,
-            }}
-            onChange={handleChange}
-            options={categoryList}
-          />
+          <input type="file" onChange={handleUpload} />
         </Form.Item>
         <Form.Item
-          label="Sub Create Category"
+          label="Add Products"
           name="name"
           rules={[
             {
               required: true,
-              message: "Please input Sub-Category Name!",
+              message: "Add Your Products!",
             },
           ]}
         >
@@ -101,7 +79,7 @@ const AddSubCategory = () => {
             loading={loading}
             disabled={loading}
           >
-            Add
+            Submit
           </Button>
         </Form.Item>
       </Form>
@@ -109,4 +87,4 @@ const AddSubCategory = () => {
   );
 };
 
-export default AddSubCategory;
+export default AddProducts;
