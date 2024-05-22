@@ -13,14 +13,13 @@ let loginController = async (req, res) => {
         "shhhhh",
         { expiresIn: "24h" }
       );
-      console.log(findUser);
       if (result) {
         res.send({
-          success: "Login Successfull",
           token: token,
           email: findUser.email,
           name: findUser.name,
           role: findUser.role,
+          success: "Login Successfull",
         });
       } else {
         res.send({ error: "Please check your email or password" });

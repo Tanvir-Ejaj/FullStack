@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const poductSchema = new Schema({
   name: String,
   image: String,
+  description: String,
   // status: {
   //   type: String,
   //   enum: ["approve", "waiting", "reject"],

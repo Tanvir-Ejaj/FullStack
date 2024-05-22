@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const AddProducts = () => {
   let [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   let [image, setImage] = useState({});
+  let [description, setDescription] = useState("");
 
   const onFinish = async (values) => {
     let data = await axios.post(
@@ -13,6 +16,7 @@ const AddProducts = () => {
       {
         name: values.name,
         avatar: image,
+        description: description,
       },
       {
         headers: {
@@ -67,6 +71,23 @@ const AddProducts = () => {
         >
           <Input />
         </Form.Item>
+        <CKEditor
+          editor={ClassicEditor}
+          data=""
+          onReady={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log("Editor is ready to use!", editor);
+          }}
+          onChange={(event, editor) => {
+            setDescription(editor.getData());
+          }}
+          onBlur={(event, editor) => {
+            console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            console.log("Focus.", editor);
+          }}
+        />
         <Form.Item
           wrapperCol={{
             offset: 8,
