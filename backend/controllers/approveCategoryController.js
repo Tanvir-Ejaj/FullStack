@@ -5,12 +5,12 @@ let approveCategoryController = async (req, res) => {
 
   let updateCategory = await Category.findOneAndUpdate(
     { _id: id },
-    { status: status == "waiting" ? "approve" : "waiting" },
+    { status: status == "waiting" ? "approved" : "waiting" },
     {
       new: true,
     }
   );
-  res.send("updated");
+  res.send({ success: "updated" });
 };
 
 module.exports = approveCategoryController;

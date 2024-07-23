@@ -1,0 +1,30 @@
+/* ViewSubCategory.css */
+.view-sub-category-container {
+  background-color: #f0f2f5; /* Light background */
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.ant-table {
+  background-color: white; /* Table background */
+}
+
+.ant-table-thead > tr > th {
+  background-color: #1890ff; /* Header background */
+  color: white; /* Header text color */
+  font-weight: bold; /* Header text weight */
+}
+
+.ant-table-tbody > tr > td {
+  background-color: #f0f2f5; /* Body background */
+}
+
+.ant-pagination-item-active {
+  border-color: #1890ff; /* Pagination active border color */
+}
+
+.ant-pagination-item-active a {
+  color: #1890ff; /* Pagination active text color */
+}

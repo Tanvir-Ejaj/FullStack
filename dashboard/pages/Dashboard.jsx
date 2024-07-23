@@ -1,19 +1,24 @@
 import React from "react";
 import {
   SecurityScanOutlined,
-  ProductOutlined,
+  AppstoreOutlined,
   UserOutlined,
   UserAddOutlined,
   UserSwitchOutlined,
+  TagsOutlined,
+  ShoppingCartOutlined,
+  SmileOutlined,
 } from "@ant-design/icons";
-import { Menu, Col, Row } from "antd";
+import { Menu, Col, Row, Layout } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./Dashboard.css"; // Create this CSS file for custom styles
+
+const { Sider, Content } = Layout;
 
 const Dashboard = () => {
-  let navigate = useNavigate();
-
-  let userInfo = useSelector((state) => state.user.value);
+  const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.user.value);
 
   function getItem(label, key, icon, children, type) {
     return {
@@ -24,6 +29,7 @@ const Dashboard = () => {
       type,
     };
   }
+
   const items = [
     userInfo.role !== "User" &&
       getItem("User", "sub1", <UserOutlined />, [
@@ -34,7 +40,7 @@ const Dashboard = () => {
       type: "divider",
     },
     userInfo.role !== "User" &&
-      getItem("Products", "sub2", <ProductOutlined />, [
+      getItem("Products", "sub2", <AppstoreOutlined />, [
         getItem("Add Products", "/dashboard/addproduct"),
         getItem("View Product", "/dashboard/viewproduct"),
       ]),
@@ -42,7 +48,7 @@ const Dashboard = () => {
       type: "divider",
     },
     userInfo.role !== "User" &&
-      getItem("Category", "sub3", <SecurityScanOutlined />, [
+      getItem("Category", "sub3", <TagsOutlined />, [
         getItem("Add Category", "/dashboard/addcategory"),
         getItem("View Category", "/dashboard/viewcategory"),
         getItem("Add Sub-Category", "/dashboard/addsubcategory"),
@@ -52,47 +58,45 @@ const Dashboard = () => {
       type: "divider",
     },
     userInfo.role !== "User" &&
-      getItem("Discount", "sub4", <SecurityScanOutlined />, [
+      getItem("Discount", "sub4", <ShoppingCartOutlined />, [
         getItem("Add Discount", "9"),
         getItem("View Discount", "10"),
       ]),
     {
       type: "divider",
     },
-    userInfo.role == "User" &&
-      getItem("My Profile", "sub5", <SecurityScanOutlined />, [
+    userInfo.role === "User" &&
+      getItem("My Profile", "sub5", <SmileOutlined />, [
         getItem("Purchase Details", "11"),
         getItem("Profile", "12"),
       ]),
     {
       type: "divider",
     },
-  ];
+  ].filter(Boolean); // Filter out false items
 
   const onClick = (e) => {
     navigate(e.key);
   };
 
   return (
-    <>
-      <Row>
-        <Col span={4}>
-          <Menu
-            onClick={onClick}
-            style={{
-              width: 256,
-            }}
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
-            mode="inline"
-            items={items}
-          />
-        </Col>
-        <Col span={18}>
+    <Layout className="dashboard-layout">
+      <Sider width={256} className="dashboard-sider">
+        <Menu
+          onClick={onClick}
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          mode="inline"
+          items={items}
+          className="dashboard-menu"
+        />
+      </Sider>
+      <Layout>
+        <Content className="dashboard-content">
           <Outlet />
-        </Col>
-      </Row>
-    </>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
