@@ -17,6 +17,7 @@ import ViewCategory from "../pages/ViewCategory";
 import ViewSubCategory from "../pages/ViewSubCategory";
 import AddProducts from "../pages/AddProducts";
 import ViewProduct from "../pages/ViewProduct";
+import ResendOtp from "../pages/ResendOtp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Registration />} />
       <Route path="/otpverification/:email" element={<OtpVerification />} />
       <Route path="/emailverification/:token" element={<EmailVerifyLink />} />
+      <Route path="/resendotp" element={<ResendOtp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgetpassword" element={<ForgetPassword />} />
       <Route path="/newpassword/:token" element={<NewPassword />} />

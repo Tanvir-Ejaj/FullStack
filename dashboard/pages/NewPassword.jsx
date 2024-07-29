@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input, Card, Typography, Space } from "antd";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+
+const { Title } = Typography;
 
 const NewPassword = () => {
   let navigate = useNavigate();
@@ -25,55 +27,76 @@ const NewPassword = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
-    <>
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
+    <Space
+      direction="vertical"
+      style={{ width: "100%", alignItems: "center", marginTop: "50px" }}
+    >
+      <Card
         style={{
-          maxWidth: 600,
+          width: 400,
+          padding: 20,
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          borderRadius: "8px",
         }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Input A New Password",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
+        <Title level={3} style={{ textAlign: "center" }}>
+          Set New Password
+        </Title>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
           wrapperCol={{
-            offset: 8,
             span: 16,
           }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={loading}
-            disabled={loading}
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Input a new password",
+              },
+              {
+                min: 6,
+                message: "Password must be at least 6 characters long",
+              },
+            ]}
           >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              disabled={loading}
+              style={{ width: "100%" }}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </Space>
   );
 };
 

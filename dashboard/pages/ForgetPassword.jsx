@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Alert } from "antd";
+import { Button, Form, Input, Alert, Card, Typography, Space } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+const { Title } = Typography;
 
 const ForgetPassword = () => {
   let [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ const ForgetPassword = () => {
     setAlert("Please Check Your Email");
     setTimeout(() => {
       navigate("/login");
-    }, 1000);
+    }, 2000);
     console.log(data.data);
   };
 
@@ -28,56 +30,77 @@ const ForgetPassword = () => {
     console.log("Failed:", errorInfo);
     setLoading(false);
   };
+
   return (
-    <>
+    <Space
+      direction="vertical"
+      style={{ width: "100%", alignItems: "center", marginTop: "50px" }}
+    >
       {alert && <Alert message={alert} type="success" showIcon closable />}
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
+      <Card
         style={{
-          maxWidth: 600,
+          width: 400,
+          padding: 20,
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          borderRadius: "8px",
         }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
+        <Title level={3} style={{ textAlign: "center" }}>
+          Forgot Password
+        </Title>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
           wrapperCol={{
-            offset: 8,
             span: 16,
           }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={loading}
-            disabled={loading}
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Email!",
+              },
+              {
+                type: "email",
+                message: "The input is not valid E-mail!",
+              },
+            ]}
           >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              disabled={loading}
+              style={{ width: "100%" }}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </Space>
   );
 };
 
