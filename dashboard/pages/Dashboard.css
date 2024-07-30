@@ -1,10 +1,10 @@
-/* Dashboard.css */
+Dashboard.css
 .dashboard-layout {
   min-height: 100vh;
 }
 
 .dashboard-sider {
-  background: #001529; /* Dark background for sider */
+  background: #001529;
 }
 
 .dashboard-menu {
@@ -14,22 +14,22 @@
 
 .dashboard-content {
   padding: 24px;
-  background: #f0f2f5; /* Light background for content */
+  background: #f0f2f5; 
   min-height: 280px;
 }
 
 .ant-menu-item,
 .ant-menu-submenu-title {
-  font-size: 16px; /* Increase font size for menu items */
+  font-size: 16px; 
 }
 
 .ant-menu-item:hover,
 .ant-menu-submenu-title:hover {
-  background-color: #1890ff !important; /* Blue background on hover */
-  color: #fff !important; /* White text on hover */
+  background-color: #1890ff !important; 
+  color: #fff !important; 
 }
 
 .ant-menu-item-selected {
-  background-color: #1890ff !important; /* Blue background for selected item */
-  color: #fff !important; /* White text for selected item */
+  background-color: #1890ff !important; 
+  color: #fff !important; 
 }

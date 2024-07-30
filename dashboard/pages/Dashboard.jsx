@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  SecurityScanOutlined,
   AppstoreOutlined,
   UserOutlined,
   UserAddOutlined,
@@ -8,11 +7,12 @@ import {
   TagsOutlined,
   ShoppingCartOutlined,
   SmileOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { Menu, Col, Row, Layout } from "antd";
+import { Menu, Layout } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./Dashboard.css"; // Create this CSS file for custom styles
+import "./Dashboard.css"; // Ensure you have this CSS file
 
 const { Sider, Content } = Layout;
 
@@ -31,7 +31,7 @@ const Dashboard = () => {
   }
 
   const items = [
-    userInfo.role !== "User" &&
+    userInfo.role !== "user" &&
       getItem("User", "sub1", <UserOutlined />, [
         getItem("Add User", "1", <UserAddOutlined />),
         getItem("View User", "2", <UserSwitchOutlined />),
@@ -39,7 +39,7 @@ const Dashboard = () => {
     {
       type: "divider",
     },
-    userInfo.role !== "User" &&
+    userInfo.role !== "user" &&
       getItem("Products", "sub2", <AppstoreOutlined />, [
         getItem("Add Products", "/dashboard/addproduct"),
         getItem("View Product", "/dashboard/viewproduct"),
@@ -47,7 +47,7 @@ const Dashboard = () => {
     {
       type: "divider",
     },
-    userInfo.role !== "User" &&
+    userInfo.role !== "user" &&
       getItem("Category", "sub3", <TagsOutlined />, [
         getItem("Add Category", "/dashboard/addcategory"),
         getItem("View Category", "/dashboard/viewcategory"),
@@ -57,7 +57,7 @@ const Dashboard = () => {
     {
       type: "divider",
     },
-    userInfo.role !== "User" &&
+    userInfo.role !== "user" &&
       getItem("Discount", "sub4", <ShoppingCartOutlined />, [
         getItem("Add Discount", "9"),
         getItem("View Discount", "10"),
@@ -65,7 +65,7 @@ const Dashboard = () => {
     {
       type: "divider",
     },
-    userInfo.role === "User" &&
+    userInfo.role === "user" &&
       getItem("My Profile", "sub5", <SmileOutlined />, [
         getItem("Purchase Details", "11"),
         getItem("Profile", "12"),
@@ -73,10 +73,16 @@ const Dashboard = () => {
     {
       type: "divider",
     },
-  ].filter(Boolean); // Filter out false items
+    getItem("Logout", "logout", <LogoutOutlined />),
+  ].filter(Boolean);
 
   const onClick = (e) => {
-    navigate(e.key);
+    if (e.key === "logout") {
+      localStorage.removeItem("user");
+      navigate("/login");
+    } else {
+      navigate(e.key);
+    }
   };
 
   return (

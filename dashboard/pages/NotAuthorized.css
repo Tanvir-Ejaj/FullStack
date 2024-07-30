@@ -1,0 +1,39 @@
+.not-authorized-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.not-authorized-card {
+  text-align: center;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+  margin-bottom: 20px;
+}
+
+.lock-icon {
+  font-size: 64px;
+  color: #ff4d4f;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.back-button {
+  width: 100%;
+}
