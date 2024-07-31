@@ -5,7 +5,7 @@ let linkController = async (req, res) => {
 
   const { token } = req.body;
 
-  var decoded = jwt.verify(token, "shhhhh");
+  var decoded = jwt.verify(token, process.env.JWT_SECRET);
   console.log(decoded);
 
   let findUser = await User.findOne({ email: decoded.email });

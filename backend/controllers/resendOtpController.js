@@ -162,7 +162,21 @@ let resendOtpController = async (req, res) => {
           from: '"Ecommerce"<tanvirejij@gmail.com>',
           to: email,
           subject: "OTP",
-          html: `<b>This is your verification code: ${otp}</b>`,
+          html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto;">
+            <h2 style="color: #444; text-align: center;">Email Verification</h2>
+            <p style="font-size: 16px;">Hello <b>${User.name}</b>,</p>
+            <p style="font-size: 16px;">Thank you for registering with us! To complete your registration, please use the following OTP (One Time Password) to verify your email address:</p>
+            <div style="text-align: center; margin: 20px 0;">
+              <span style="display: inline-block; padding: 10px 20px; font-size: 24px; color: #fff; background-color: #28a745; border-radius: 5px; letter-spacing: 2px;">
+                ${otp}
+              </span>
+            </div>
+            <p style="font-size: 16px;">If you did not register for an account, please disregard this email.</p>
+            <p style="font-size: 16px;">Best regards,</p>
+            <p style="font-size: 16px;">The E-commerce Team</p>
+          </div>
+        `,
         };
 
         await sendMailWithRetry(transporter, mailOptions);
