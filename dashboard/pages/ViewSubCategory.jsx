@@ -59,7 +59,7 @@
 // UI from Chat GPT
 
 import React, { useEffect, useState } from "react";
-import { Button, Table, Space, message, Modal } from "antd";
+import { Button, Table, Space, message, Modal, Tag } from "antd";
 import axios from "axios";
 import "./ViewSubCategory.css"; // Create this CSS file for custom styles
 
@@ -100,7 +100,7 @@ const ViewSubCategory = () => {
         "http://localhost:8000/api/v1/category/approvesubcategory",
         {
           id: record.key,
-          status,
+          status: record.status,
         }
       );
       message.success(`Sub-category ${status} successfully!`);
@@ -149,9 +149,14 @@ const ViewSubCategory = () => {
       key: "category_name",
     },
     {
-      title: "Status",
+      title: "status",
       dataIndex: "status",
       key: "status",
+      render: (status) => (
+        <Tag color={status === "approved" ? "green" : "orange"}>
+          {status.toUpperCase()}
+        </Tag>
+      ),
     },
     {
       title: "Action",
@@ -159,24 +164,10 @@ const ViewSubCategory = () => {
       render: (_, record) => (
         <Space>
           {record.status === "waiting" && (
-            <Button
-              type="primary"
-              onClick={() => handleStatus(record, "approved")}
-              loading={loading}
-              disabled={loading}
-            >
-              Accept
-            </Button>
+            <Button onClick={() => handleStatus(record)}>Approve</Button>
           )}
           {record.status === "approved" && (
-            <Button
-              type="default"
-              onClick={() => handleStatus(record, "rejected")}
-              loading={loading}
-              disabled={loading}
-            >
-              Reject
-            </Button>
+            <Button onClick={() => handleStatus(record)}>Reject</Button>
           )}
           <Button
             type="danger"

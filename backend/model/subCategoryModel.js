@@ -5,7 +5,7 @@ const SubcategorySchema = new Schema({
   name: String,
   status: {
     type: String,
-    enum: ["approve", "waiting", "reject"],
+    enum: ["approved", "waiting", "reject"],
     default: "waiting",
   },
   categoryId: {

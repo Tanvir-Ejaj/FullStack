@@ -12,7 +12,7 @@ import {
 import { Menu, Layout } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./Dashboard.css"; // Ensure you have this CSS file
+import "./Dashboard.css";
 
 const { Sider, Content } = Layout;
 
